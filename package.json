@@ -4,7 +4,8 @@
   "description": "",
   "main": "Main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "Build": "docker build -t jkpg.city . && docker tag jkpg.city:latest localhost:5000/jkpg-city:latest && docker push localhost:5000/jkpg-city:latest "
   },
   "repository": {
     "type": "git",
