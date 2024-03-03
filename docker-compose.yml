@@ -10,3 +10,17 @@ services:
       - "3000:3000"
     volumes:
       - ./stores.json:/app/stores.json
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: jkpgcitydb
+      MONGO_INITDB_ROOT_PASSWORD: jkpgcitydb4321
+
+  registry:
+    image: registry:latest
+    ports:
+      - 5000:5000
+    restart: always
+
