@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jkpgcity-deployment
+  labels:
+    app: jkpgcity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jkpgcity
+  template:
+    metadata:
+      labels:
+        app: jkpgcity
+    spec:
+      containers:
+      - name: mongodbjkpg
+        image: mongo:5.0
+        ports:
+        - containerPort: 27017
+        env:
+        - name: USER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: mongo-user
+        - name: USER_PWD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: mongo-user
+        - name: DB_URL
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-configmap
+              key: mongo-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jkpgcity-service
+spec:
+  type: NodePort
+  selector:
+    app: jkpgcity
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+      nodePort: 30100

@@ -2,10 +2,9 @@
 // const app = express()
 // const port = 30100
 
+var data = require("./stores.json")
+console.log(data)
 
-// app.get('/', (req,res,next) =>(
-// console.log('hej')
-// ))
 
 // app.listen(port, () => {
 //   console.log(`Server running at http://localhost:${port}`);
