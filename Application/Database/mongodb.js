@@ -40,41 +40,58 @@ const FilteredData = jsonData.map(({ name, url, district, rating }) => ({
 
 //________________________CREATE,READ,UPDATE,DELETE QUERIES FOR THE VENUES______________________
 
-module.exports = function ({ Database }) {
+module.exports = async function ({ Database }) {
   return {
 
     getVenue: async function (document, callback) {
       try {
-        Venues.find({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+        mongoose.connection.on('open',() =>{
+        await Venues.find({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+        mongoose.connection.close();
+        });
       }
       catch {
         callback(['HasDBError'], null)
+        mongoose.connection.close();
       }
     },
 
     addVenue: async function (document, callback) {
       try {
-        Venues.insertOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
-      }
+        mongoose.connection.on('open', () => {
+        await Venues.insertOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+        mongoose.connection.close();
+        });
+      } 
       catch {
         callback(['HasDBError'], null)
+        mongoose.connection.close();
       }
     },
 
     deleteVenue: async function (document, callback) {
       try {
-        Venues.deleteOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+        mongoose.connection.on('open', () => {
+        await Venues.deleteOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+        mongoose.connection.close();
+        });
       }
       catch {
         callback(['HasDBError'], null)
+        mongoose.connection.close();
       }
     },
 
     updateVenue: async function (document, callback) {
       try {
-        Venues.updateOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
-      } catch {
+        mongoose.connection.on('open', () => {
+        await Venues.updateOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+        mongoose.connection.close();
+        });
+      } 
+      catch {
         callback(['HasDBError'], null)
+        mongoose.connection.close();
       }
     },
 
@@ -82,48 +99,69 @@ module.exports = function ({ Database }) {
     SortVenueByDistrict: async function ({ document, callback }) {
       try {
         if (document.district === 'Öster') {
-          Venues.find({ district: 'Öster' })
+          mongoose.connection.on('open', () => {
+          await Venues.find({ district: 'Öster' })
             .then(venues => {
               console.log(venues);
+              mongoose.connection.close();
             })
+          })
         }
 
         if (document.district === 'Väster') {
-          Venues.find({ district: 'Väster' })
+          mongoose.connection.on('open', () => {
+          await Venues.find({ district: 'Väster' })
             .then(venues => {
               console.log(venues);
+              mongoose.connection.close();
             })
+          })
         }
 
         if (document.district === 'Atollen') {
-          Venues.find({ district: 'Atollen' })
+          mongoose.connection.on('open', () => {
+          await Venues.find({ district: 'Atollen' })
             .then(venues => {
               console.log(venues);
+              mongoose.connection.close();
             })
+          })
         }
 
         if (document.district === 'Tändsticksområdet') {
-          Venues.find({ district: 'Tändsticksområdet' })
+          mongoose.connection.on('open', () => {
+          await Venues.find({ district: 'Tändsticksområdet' })
             .then(venues => {
               console.log(venues);
+              mongoose.connection.close();
             })
+          })
         }
 
         if (document.district === 'Rescentrum') {
-          Venues.find({ district: 'Resecentrum' })
+          mongoose.connection.on('open', () => {
+          await Venues.find({ district: 'Resecentrum' })
             .then(venues => {
               console.log(venues);
+              mongoose.connection.close();
             })
+          })
         }
+        
+        else mongoose.connection.on('open', () => {
+          ( Venues.find({}) )
+        mongoose.connection.close();
+        })
       } catch {
         callback(['HasDbError'], null)
+        mongoose.connection.close();
       }
     },
 
 
     ShowVenues: async function ({ }) {
       try {
-        Venues.find({})
+        await Venues.find({})
           .then(venues => {
             console.log(venues);
           })
