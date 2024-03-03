@@ -1,18 +1,11 @@
-# Use Node.js base image
-FROM node:alpine
+FROM node:20
 
-# Set working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Copy package.json and install dependencies
-COPY package.json package-lock.json ./
+COPY . .
+
 RUN npm install
 
-# Copy backend source code
-COPY backend ./backend
-
-# Expose port 3000
 EXPOSE 3000
 
-# Command to run the backend service
-CMD ["node", "backend/server.js"]
+CMD ["node","REST.js"]
