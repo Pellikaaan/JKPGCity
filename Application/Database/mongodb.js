@@ -7,8 +7,11 @@ const fs = require('fs');
 //mongoose.connect('mongodb://localhost/jkpgcitydb');
 const AtlasConnection = 'mongodb+srv://jkpgcitydb:jkpgcitydb4321@cluster0.1xjsgtk.mongodb.net/jkpgcity';
 mongoose.connect(AtlasConnection)
-// Skapa en Mongoose-modell för din samling
+//Mongoose-modell blir collections för din samling
 const Venues = mongoose.model('Venues', { name: String, url: String, district: String, rating: Number });
+const Accounts = mongoose.model('Accounts', {username: String, password: String, isAdmin: Boolean})
+
+
 
 
 //spara och decoda 
