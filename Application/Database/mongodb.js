@@ -9,9 +9,7 @@ const AtlasConnection = 'mongodb+srv://jkpgcitydb:jkpgcitydb4321@cluster0.1xjsgt
 mongoose.connect(AtlasConnection)
 //Mongoose-modell blir collections för din samling
 const Venues = mongoose.model('Venues', { name: String, url: String, district: String, rating: Number });
-const Accounts = mongoose.model('Accounts', {username: String, password: String, isAdmin: Boolean})
-
-
+const Accounts = mongoose.model('Accounts', { username: String, password: String, isAdmin: Boolean })
 
 
 //spara och decoda 
@@ -25,20 +23,32 @@ const FilteredData = jsonData.map(({ name, url, district, rating }) => ({
   district: district || null,
   rating: rating || null
 }));
+/*console.log('ör de du som funkar?')
+Venues.find({})
+  .then(Venues => {
+    console.log(Venues);
+  })
+  .catch(err => {
+    console.error(err);
+  })
+*/
+//console.log('jag vill se min databas')
+//Venues.find({}).then(() => { console.log(Venues)})
 
-
+//console.log('här får vi en venue')
+//mongoose.connection.on('open',() =>{
+//  Venues.find({ name: document.name, url: document.url, district: document.district, rating: document.rating }).then(() =>
+//  {mongoose.connection.close()})},
 //sätter in data
-//Venues.insertMany(FilteredData)
-//.then(() => {
-// console.log('Data är nu i databasen.');
-// mongoose.connection.close();
-//})
-//.catch(err => {
-// console.error('Fel o köra in data:', err);
-//mongoose.connection.close();
-//});
-
-
+/*Venues.insertMany(FilteredData)
+.then(() => {
+ console.log('Data är nu i databasen.');
+ mongoose.connection.close();
+})
+.catch(err => {
+ console.error('Fel o köra in data:', err);
+mongoose.connection.close();
+});*/
 
 
 //________________________CREATE,READ,UPDATE,DELETE QUERIES FOR THE VENUES______________________
@@ -46,125 +56,108 @@ const FilteredData = jsonData.map(({ name, url, district, rating }) => ({
 module.exports = async function ({ Database }) {
   return {
 
-    getVenue: async function (document, callback) {
-      try {
-        mongoose.connection.on('open',() =>{
-        await Venues.find({ name: document.name, url: document.url, district: document.district, rating: document.rating })
-        mongoose.connection.close();
-        });
-      }
-      catch {
-        callback(['HasDBError'], null)
-        mongoose.connection.close();
-      }
+    getVenue: function (document, callback) {
+      Venues.find({ district: document.district })
+        .then(venues => {
+          console.log(venues)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
 
-    addVenue: async function (document, callback) {
-      try {
-        mongoose.connection.on('open', () => {
-        await Venues.insertOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
-        mongoose.connection.close();
-        });
-      } 
-      catch {
-        callback(['HasDBError'], null)
-        mongoose.connection.close();
-      }
+    addVenue: function (document, callback) {
+      Venues.insertOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+        .then(venues => {
+          console.log(venues)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
 
-    deleteVenue: async function (document, callback) {
-      try {
-        mongoose.connection.on('open', () => {
-        await Venues.deleteOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
-        mongoose.connection.close();
-        });
-      }
-      catch {
-        callback(['HasDBError'], null)
-        mongoose.connection.close();
-      }
+    deleteVenue: function (document, callback) {
+      Venues.deleteOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+        .then(venues => {
+          console.log(venues)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
 
-    updateVenue: async function (document, callback) {
-      try {
-        mongoose.connection.on('open', () => {
-        await Venues.updateOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
-        mongoose.connection.close();
-        });
-      } 
-      catch {
-        callback(['HasDBError'], null)
-        mongoose.connection.close();
-      }
+    updateVenue: function (document, callback) {
+      Venues.UpdateOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+        .then(venues => {
+          console.log(venues)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
 
     //_________________________SORTING QUERIES FOR THE VENUES________________________
-    SortVenueByDistrict: async function ({ document, callback }) {
-      try {
-        if (document.district === 'Öster') {
-          mongoose.connection.on('open', () => {
-          await Venues.find({ district: 'Öster' })
+    SortVenueByDistrict: function ({ document, callback }) {
+      if (document.district === 'Öster') {
+        mongoose.connection.on('open', () => {
+          Venues.find({ district: 'Öster' })
             .then(venues => {
               console.log(venues);
               mongoose.connection.close();
             })
-          })
-        }
-
-        if (document.district === 'Väster') {
-          mongoose.connection.on('open', () => {
-          await Venues.find({ district: 'Väster' })
-            .then(venues => {
-              console.log(venues);
-              mongoose.connection.close();
-            })
-          })
-        }
-
-        if (document.district === 'Atollen') {
-          mongoose.connection.on('open', () => {
-          await Venues.find({ district: 'Atollen' })
-            .then(venues => {
-              console.log(venues);
-              mongoose.connection.close();
-            })
-          })
-        }
-
-        if (document.district === 'Tändsticksområdet') {
-          mongoose.connection.on('open', () => {
-          await Venues.find({ district: 'Tändsticksområdet' })
-            .then(venues => {
-              console.log(venues);
-              mongoose.connection.close();
-            })
-          })
-        }
-
-        if (document.district === 'Rescentrum') {
-          mongoose.connection.on('open', () => {
-          await Venues.find({ district: 'Resecentrum' })
-            .then(venues => {
-              console.log(venues);
-              mongoose.connection.close();
-            })
-          })
-        }
-        
-        else mongoose.connection.on('open', () => {
-          ( Venues.find({}) )
-        mongoose.connection.close();
         })
-      } catch {
-        callback(['HasDbError'], null)
-        mongoose.connection.close();
       }
+
+      if (document.district === 'Väster') {
+        mongoose.connection.on('open', () => {
+          Venues.find({ district: 'Väster' })
+            .then(venues => {
+              console.log(venues);
+              mongoose.connection.close();
+            })
+        })
+      }
+
+      if (document.district === 'Atollen') {
+        mongoose.connection.on('open', () => {
+          Venues.find({ district: 'Atollen' })
+            .then(venues => {
+              console.log(venues);
+              mongoose.connection.close();
+            })
+        })
+      }
+
+      if (document.district === 'Tändsticksområdet') {
+        mongoose.connection.on('open', () => {
+          Venues.find({ district: 'Tändsticksområdet' })
+            .then(venues => {
+              console.log(venues);
+              mongoose.connection.close();
+            })
+        })
+      }
+
+      if (document.district === 'Rescentrum') {
+        mongoose.connection.on('open', () => {
+          Venues.find({ district: 'Resecentrum' })
+            .then(venues => {
+              console.log(venues);
+              mongoose.connection.close();
+            })
+        })
+      }
+
+      else mongoose.connection.on('open', () => {
+        (Venues.find({}))
+        mongoose.connection.close();
+      })
     },
 
-
-    ShowVenues: async function ({ }) {
+    ShowVenues: function ({ }) {
+      console.log('är du här o luskar')
       try {
-        await Venues.find({})
+        Venues.find({})
           .then(venues => {
             console.log(venues);
           })
