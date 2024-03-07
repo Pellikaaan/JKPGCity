@@ -1,9 +1,9 @@
 version: '3'
 services:
   web:
-    build: ./Web-app
+    build: ./web-app
     ports:
-      - "30100:80"
+      - "5001:5001"
   backend:
     build: .
     ports:

@@ -1,8 +1,11 @@
-# Use Nginx base image
-FROM nginx
+FROM node:20
 
-# Copy static files into Nginx directory
-COPY Views /usr/share/nginx/html
+WORKDIR /usr/src/theApp
 
-# Expose port 80
-EXPOSE 80
+COPY . .
+
+RUN npm install
+
+EXPOSE 5001
+
+CMD ["node","theApp.js"]
