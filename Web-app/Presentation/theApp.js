@@ -32,14 +32,10 @@ const expressSession = require('express-session')
 				layoutsDir: path.join(__dirname, 'layouts')
 			}))
 
-
-
-			app.set('views', path.join(__dirname, "views"))
+			app.set('Views', path.join(__dirname, "views"))
 		
-			app.get('/', function (request, response) {
-				response.render('homepage.hbs')
-			})
-
+			app.use('/', variousRouter)
+			
 			app.listen(5001, function () {
 				console.log("Running on port 5001!")
 			})

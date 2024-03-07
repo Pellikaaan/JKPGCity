@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const jwt = require("jsonwebtoken")
-const homepageRouter = require('./Presentation/Routers/homepage-router')
+const homepageRouter = require('./Routers/homepage-router')
 
 
 //module.exports = function ({ accountManager,homepageRouter}) {
