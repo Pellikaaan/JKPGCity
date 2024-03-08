@@ -8,4 +8,4 @@ RUN npm install
 
 EXPOSE 5001
 
-CMD ["node","theApp.js"]
+CMD ["node","main.js"]

@@ -4,12 +4,6 @@ services:
     build: ./web-app
     ports:
       - "5001:5001"
-  backend:
-    build: .
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./stores.json:/app/stores.json
 
   mongo:
     image: mongo
