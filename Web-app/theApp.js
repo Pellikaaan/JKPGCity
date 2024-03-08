@@ -3,12 +3,11 @@ const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const path = require('path')
 const redis = require('redis')
-const expressSession = require('express-session')
 
 
-//module.exports = function ({ restApi }) {
-//	return {
-		//start() {
+module.exports = function ({ homepageRouter }) {
+	return {
+		start() {
 			const app = express()
 
 			const redisClient = redis.createClient({
@@ -31,16 +30,17 @@ const expressSession = require('express-session')
 				defaultLayout: 'main.hbs',
 				layoutsDir: path.join(__dirname, 'layouts')
 			}))
+			app.set('view engine', 'hbs');
 
-			app.set('Views', path.join(__dirname, "views"))
+			app.set('Views', path.join(__dirname, "/Presentation/Views"))
+
+			app.use('/', homepageRouter)
 		
-			app.use('/', variousRouter)
-			
 			app.listen(5001, function () {
 				console.log("Running on port 5001!")
 			})
 
 	
-		//}
-//	}
-//}
+		}
+	}
+}

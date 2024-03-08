@@ -1,11 +1,12 @@
-const express = requrie('express')
+const express = require('express')
 
 
 module.exports = function({}){
 	const router = express.Router()
 
 	router.get("/", function(request, response){
-		response.render("homepage.hbs")
+		console.log("är du här")
+		response.render("homepage")
 	})
 
 	router.get("/about", function(request, response){
