@@ -28,11 +28,11 @@ module.exports = function ({ homepageRouter }) {
 			app.engine('hbs', expressHandlebars.engine({
 				extname: 'hbs',
 				defaultLayout: 'main.hbs',
-				layoutsDir: path.join(__dirname, 'layouts')
+				layoutsDir: path.join(__dirname, 'Presentation','layouts')
 			}))
 			app.set('view engine', 'hbs');
 
-			app.set('Views', path.join(__dirname, "/Presentation/Views"))
+			app.set('views', path.join(__dirname, 'Presentation', 'Views'));
 
 			app.use('/', homepageRouter)
 		

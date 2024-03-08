@@ -6,7 +6,7 @@ module.exports = function({}){
 
 	router.get("/", function(request, response){
 		console.log("är du här")
-		response.render("homepage")
+		response.render("homepage.hbs")
 	})
 
 	router.get("/about", function(request, response){
