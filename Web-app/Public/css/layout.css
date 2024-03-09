@@ -34,3 +34,18 @@ body {
     color: #555;
   }
   
+  .dropdown {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .dropdown-item {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .district-checkbox {
+    margin-right: 5px;
+  }
+  

@@ -20,17 +20,28 @@ const venueSchema = new mongoose.Schema({
 // Create a model from the schema
 const Venue = mongoose.model('Venue', venueSchema);
 
-// Function to fetch all venues from the "venues" collection
-async function fetchAllVenues() {
+async function fetchAllVenues(filterOptions = {}, sortOptions = {}) {
   try {
-    const venues = await Venue.find().lean();
-    //console.log('Fetched Venues:', venues);
-    return venues;
+      const venues = await Venue.find(filterOptions).sort(sortOptions).lean();
+      return venues;
   } catch (error) {
-    console.error('Error fetching venues:', error);
+      console.error('Error fetching venues:', error);
+      throw error;
+  }
+}
+
+
+async function fetchDistinctDistricts() {
+  try {
+      const districts = await Venue.distinct("district");
+      return districts.sort();
+  } catch (error) {
+      console.error('Error fetching districts:', error);
+      throw error;
   }
 }
 
 module.exports = {
-  fetchAllVenues
+  fetchAllVenues,
+  fetchDistinctDistricts,
 };
