@@ -1,4 +1,31 @@
 <h1>Venues</h1>
+<button id="toggleFilter">Filter by District</button>
+
+<!-- Dropdown Menu Initially Hidden -->
+<div id="districtFilter" style="display: none;">
+  <form action="/venues" method="get">
+    <select name="districts" multiple>
+      {{#each allDistricts}}
+        <option value="{{this}}">{{this}}</option>
+      {{/each}}
+    </select>
+    <button type="submit">Apply Filter</button>
+  </form>
+</div>
+<button type="button" id="clearFilter">Clear</button>
+
+<script>
+document.getElementById('toggleFilter').addEventListener('click', function() {
+  var filterDiv = document.getElementById('districtFilter');
+  filterDiv.style.display = filterDiv.style.display === 'none' ? '' : 'none';
+});
+
+document.getElementById('clearFilter').addEventListener('click', function() {
+  window.location.href = '/venues'; // Redirect to venues without any filter
+});
+</script>
+
+
 <ul>
   {{#each venues}}
     <li>
