@@ -22,26 +22,86 @@ const Venue = mongoose.model('Venue', venueSchema);
 
 async function fetchAllVenues(filterOptions = {}, sortOptions = {}) {
   try {
-      const venues = await Venue.find(filterOptions).sort(sortOptions).lean();
-      return venues;
+    const venues = await Venue.find(filterOptions).sort(sortOptions).lean();
+    return venues;
   } catch (error) {
-      console.error('Error fetching venues:', error);
-      throw error;
+    console.error('Error fetching venues:', error);
+    throw error;
   }
 }
 
 
 async function fetchDistinctDistricts() {
   try {
-      const districts = await Venue.distinct("district");
-      return districts.sort();
+    const districts = await Venue.distinct("district");
+    return districts.sort();
   } catch (error) {
-      console.error('Error fetching districts:', error);
-      throw error;
+    console.error('Error fetching districts:', error);
+    throw error;
   }
 }
+
+async function createVenue(document) {
+  try {
+    const venue = await Venue.insertOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+    return venue;
+  } catch (error) {
+    console.error("error", error)
+    throw error;
+  }
+}
+async function deleteVenue(document) {
+  try {
+    const venue = await Venue.deleteOne({document})
+    return venue;
+  } catch (error) {
+    console.error("error", error)
+    throw error;
+  }
+}
+
+async function updateVenue(document) {
+  console.log("Received document:", document._id,document.name,document.url,document.district,document.rating);
+
+    // Check if 'document' is defined and contains the necessary properties
+    if (!document || !document.name || !document.url || !document.district || !document.rating) {
+      throw new Error("Invalid document object or missing properties");
+    }
+
+  const newData = {
+    _id: document._id,
+    name: document.name,
+    url: document.url,
+    district: document.district,
+    rating: document.rating
+};
+
+  try {
+    const venue = await Venue.updateOne({_id: document._id },{ $set: newData });
+    return venue;
+  } catch (error) {
+    console.error("error", error)
+    throw error;
+  }
+}
+
+async function getVenueByID(_id){
+  try{
+    const venue = await Venue.findById(_id)
+    return venue;
+  } catch(error){
+    console.error('error',error)
+    throw error
+  }
+}
+
+
 
 module.exports = {
   fetchAllVenues,
   fetchDistinctDistricts,
+  createVenue,
+  deleteVenue,
+  updateVenue,
+  getVenueByID
 };

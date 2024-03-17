@@ -1,0 +1,41 @@
+<h1>Update Comment</h1>
+
+{{#if errors.length}}
+<p>Couldn't update the review because:</p>
+<ul>
+    {{#each errors}}
+        <li>{{this}}</li>
+    {{/each}}
+</ul>
+{{/if}}
+
+<p> want to update this?</p>
+<p>Title: {{venues.name}}</p>
+<p>url: {{venues.url}}</p>
+<p>District: {{venues.district}}</p>
+<p>rating: {{venues.rating}}</p>
+<form action="/venues/createVenue"method="post">
+<input type="hidden" name="_id" value="{{_id}}">
+
+    <div>
+        Title: <input type="text" name="title" value="{{name}}">
+    </div>
+        <h4>Comment:</h4>
+        <textarea name="url" value="{{url}}" rows="7" cols="40"> </textarea>
+    </div>
+     <div>
+        District: <input type="text" name="district" value="{{district}}">
+    </div>
+        Rating:
+        <select name="rating" id="rating">
+            <option value= 1 > 1 </option>
+            <option value= 2 > 2 </option>
+            <option value= 3 selected> 3 </option>
+            <option value= 4 > 4 </option>
+            <option value= 5 > 5 </option>
+        </select>
+    <div>
+        <input type="submit" value="Make A Comment">
+    </div>
+    </div>
+</form>
