@@ -1,0 +1,11 @@
+<h1>Venues</h1>
+<ul>
+  {{#each venues}}
+    <li>
+      <h2>{{this.name}}</h2>
+      <p>District: {{this.district}}</p>
+      <p>URL: <a href="{{this.url}}">{{this.url}}</a></p>
+      <p>Rating: {{this.rating}}</p>
+    </li>
+  {{/each}}
+</ul>
