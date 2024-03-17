@@ -6,7 +6,7 @@
   <form action="/venues" method="get">
     <select name="districts" multiple>
       {{#each allDistricts}}
-        <option value="{{this}}">{{this}}</option>
+      <option value="{{this}}">{{this}}</option>
       {{/each}}
     </select>
     <button type="submit">Apply Filter</button>
@@ -15,24 +15,35 @@
 <button type="button" id="clearFilter">Clear</button>
 
 <script>
-document.getElementById('toggleFilter').addEventListener('click', function() {
-  var filterDiv = document.getElementById('districtFilter');
-  filterDiv.style.display = filterDiv.style.display === 'none' ? '' : 'none';
-});
+  document.getElementById('toggleFilter').addEventListener('click', function () {
+    var filterDiv = document.getElementById('districtFilter');
+    filterDiv.style.display = filterDiv.style.display === 'none' ? '' : 'none';
+  });
 
-document.getElementById('clearFilter').addEventListener('click', function() {
-  window.location.href = '/venues'; // Redirect to venues without any filter
-});
+  document.getElementById('clearFilter').addEventListener('click', function () {
+    window.location.href = '/venues'; // Redirect to venues without any filter
+  });
 </script>
 
 
 <ul>
   {{#each venues}}
-    <li>
-      <h2>{{this.name}}</h2>
-      <p>District: {{this.district}}</p>
-      <p>URL: <a href="{{this.url}}">{{this.url}}</a></p>
-      <p>Rating: {{this.rating}}</p>
-    </li>
+  <li>
+    <h2>{{this.name}}</h2>
+    <p>District: {{this.district}}</p>
+    <p>URL: <a href="{{this.url}}">{{this.url}}</a></p>
+    <p>Rating: {{this.rating}}</p>
+    <form action="/venues/delete" method="POST">
+      <div> 
+        <input type="submit" value = "Delete">
+      </div> 
+    </form>
+    <form action="/venues/update/{{_id}}" method="GET">
+      <div>
+        <input type="hidden" name="_id" value="{{_id}}">
+        <input type="submit" value = "Update">
+      </div> 
+    </form>
+  </li>
   {{/each}}
 </ul>
