@@ -37,6 +37,7 @@ module.exports = function ({ homepageRouter, venuesRouter, restAPIRouter }) {
 
 			app.use('/', homepageRouter)
 			app.use('/venues', venuesRouter)
+			app.use('/createVenue',venuesRouter)
 			app.use('/api', restAPIRouter)
 		
 			app.listen(5001, function () {

@@ -9,18 +9,14 @@
 </ul>
 {{/if}}
 
-<p> want to update this?</p>
-<p>Title: {{venues.name}}</p>
-<p>url: {{venues.url}}</p>
-<p>District: {{venues.district}}</p>
-<p>rating: {{venues.rating}}</p>
+
 <form action="/venues/createVenue"method="post">
 <input type="hidden" name="_id" value="{{_id}}">
 
     <div>
-        Title: <input type="text" name="title" value="{{name}}">
+        Name: <input type="text" name="name" value="{{name}}">
     </div>
-        <h4>Comment:</h4>
+        <h4>URL:</h4>
         <textarea name="url" value="{{url}}" rows="7" cols="40"> </textarea>
     </div>
      <div>
@@ -35,7 +31,7 @@
             <option value= 5 > 5 </option>
         </select>
     <div>
-        <input type="submit" value="Make A Comment">
+        <input type="submit" value="Create Venue">
     </div>
     </div>
 </form>

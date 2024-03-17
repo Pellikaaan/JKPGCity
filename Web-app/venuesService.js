@@ -43,7 +43,7 @@ async function fetchDistinctDistricts() {
 
 async function createVenue(document) {
   try {
-    const venue = await Venue.insertOne({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+    const venue = await Venue.create({ name: document.name, url: document.url, district: document.district, rating: document.rating })
     return venue;
   } catch (error) {
     console.error("error", error)

@@ -2,7 +2,7 @@ const express = require('express');
 const Venue = require('../../venuesService');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-
+const fetch = require('node-fetch');
 
 
 module.exports = function ({ }) {
@@ -98,5 +98,29 @@ module.exports = function ({ }) {
             response.redirect('/venues')
         }
     });
-    return router;
+
+    router.get('/createVenue', async (request, response) => {
+        response.render('venues-create.hbs')
+    })
+
+    router.post('/createVenue', async (request, response) => {
+        try {
+            const { name, url, district, rating } = request.body
+            document = {
+                name,
+                url,
+                district,
+                rating
+            }
+            await Venue.createVenue(document)
+            response.redirect('/venues')
+        }
+        catch (error) {
+            console.error(error)
+            response.redirect('/venues')
+        }
+
+
+    });
+        return router;
 };
