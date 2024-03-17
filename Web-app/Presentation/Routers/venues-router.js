@@ -53,7 +53,7 @@ module.exports = function ({ }) {
           response.redirect('/venues')
         } catch (error) {
           console.error('Error removing venue:', error);
-          //response.status(500).send('Internal Server Error'); // Send an error response
+          response.status(500).send('Internal Server Error'); // Send an error response
           response.redirect('/venues')
         }
     });
