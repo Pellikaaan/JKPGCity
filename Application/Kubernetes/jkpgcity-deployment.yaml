@@ -14,11 +14,12 @@ spec:
         app: jkpgcity_web
     spec:
       containers:
-        - name: jkpgcityspace1
+        - name: jkpgcity
           image: localhost:5000/jkpg-city:latest
           env:
-            - name: "jkpg-city"
+            - name: JKPG_CITY_IMAGE
               value: localhost:5000/jkpg-city:latest
+          imagePullPolicy: Always
 
 ---
 apiVersion: v1
@@ -32,4 +33,4 @@ spec:
   ports:
     - protocol: TCP
       port: 5001
-      targetPort: 5000
+      targetPort: 5001

@@ -16,25 +16,9 @@ module.exports = function ({ homepageRouter, venuesRouter, restAPIRouter,loginRo
 			
 			app.use(express.static(path.join(__dirname, 'Presentation', 'layouts')));
 
-			const store = new MongoDBStore({
-				uri: 'mongodb://localhost:27017/sessionstore',
-				collection: 'sessions'
-			  });
-			  
-			  // Catch errors
-			  store.on('error', function(error) {
-				console.error('MongoDB Session Store Error:', error);
-			  });
 			  
 			  const oneHour = 1000 * 60 * 60;
-			  
-			  app.use(expressSession({
-				secret: "hugoOTim",
-				saveUninitialized: false,
-				resave: false,
-				cookie: { maxAge: oneHour },
-				store: store
-			  }));
+			
 
 			app.engine('hbs', expressHandlebars.engine({
 				extname: 'hbs',
