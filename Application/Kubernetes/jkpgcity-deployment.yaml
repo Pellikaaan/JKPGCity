@@ -15,10 +15,10 @@ spec:
     spec:
       containers:
         - name: jkpgcityspace1
-          image: localhost:5001/jkpg-city:latest
+          image: localhost:5000/jkpg-city:latest
           env:
             - name: "jkpg-city"
-              value: localhost:5001/jkpg-city:latest
+              value: localhost:5000/jkpg-city:latest
 
 ---
 apiVersion: v1

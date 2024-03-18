@@ -11,24 +11,24 @@
 
     <script>
         d3.json("stores.json").then(function(data) {
-            // Count occurrences of each district
+           
             const districtCounts = {};
             data.forEach(function(d) {
                 const district = d.district || "Unknown";
                 districtCounts[district] = (districtCounts[district] || 0) + 1;
             });
 
-            // Convert object to array of { district, count } objects
+            
             const districtData = Object.keys(districtCounts).map(function(district) {
                 return { district: district, count: districtCounts[district] };
             });
 
-            // Set up SVG dimensions and margins
+           
             const margin = { top: 20, right: 20, bottom: 30, left: 40 };
             const width = 600 - margin.left - margin.right;
             const height = 400 - margin.top - margin.bottom;
 
-            // Create SVG element
+            
             const svg = d3.select("#chart-container")
                 .append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -36,7 +36,7 @@
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            // Define scales
+            
             const x = d3.scaleBand()
                 .domain(districtData.map(function(d) { return d.district; })) // Corrected the domain function
                 .range([0, width])
