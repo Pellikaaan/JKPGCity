@@ -19,7 +19,7 @@ module.exports = function({}){
 
         if (request.method == "OPTIONS") {
             return response.status(200).end()
-        }
+       }
 
         next()
     })

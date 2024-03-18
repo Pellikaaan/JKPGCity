@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>District Distribution Bar Chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div id="chart-container"></div>
+
+    <script>
+        d3.json("stores.json").then(function(data) {
+           
+            const districtCounts = {};
+            data.forEach(function(d) {
+                const district = d.district || "Unknown";
+                districtCounts[district] = (districtCounts[district] || 0) + 1;
+            });
+
+            
+            const districtData = Object.keys(districtCounts).map(function(district) {
+                return { district: district, count: districtCounts[district] };
+            });
+
+           
+            const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+            const width = 600 - margin.left - margin.right;
+            const height = 400 - margin.top - margin.bottom;
+
+            
+            const svg = d3.select("#chart-container")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            
+            const x = d3.scaleBand()
+                .domain(districtData.map(function(d) { return d.district; })) // Corrected the domain function
+                .range([0, width])
+                .padding(0.1);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(districtData, function(d) { return d.count; })])
+                .nice()
+                .range([height, 0]);
+
+            // Create bars d.district;
+            svg.selectAll(".bar")
+                .data(districtData)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", function(d) { return x(d.district); })
+                .attr("width", x.bandwidth())
+                .attr("y", function(d) { return y(d.count); })
+                .attr("height", function(d) { return height - y(d.count); });
+
+            // Add x-axis
+            svg.append("g")
+                .attr("class", "x-axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+            // Add y-axis
+            svg.append("g")
+                .attr("class", "y-axis")
+                .call(d3.axisLeft(y));
+
+            // Add chart title
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", 0 - (margin.top / 2))
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
+                .text("District Distribution");
+        }).catch(function(error) {
+            console.error("Error loading the data: " + error);
+        });
+    </script>
+</body>
+</html>

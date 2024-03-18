@@ -2,7 +2,7 @@ const awilix = require('awilix')
 const app = require("./theApp")
 
 const container = awilix.createContainer()
-
+container.register("loginRouter", awilix.asFunction(require('./Presentation/Routers/login-router.js')))
 container.register("homepageRouter", awilix.asFunction(require('./Presentation/Routers/various-router.js')))
 container.register("venuesRouter", awilix.asFunction(require('./Presentation/Routers/venues-router.js')))
 container.register("restAPIRouter", awilix.asFunction(require('./rest-api/rest-api-router.js')))
