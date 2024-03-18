@@ -57,7 +57,6 @@ module.exports = function ({ }) {
 
 
     router.post('/delete', async (request, response) => {
-        console.log("lukta ännu mer snutt")
         try {
             const { name, url, district, rating } = request.body;
             // Remove the venue from MongoDB using Mongoose

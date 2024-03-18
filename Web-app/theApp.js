@@ -18,7 +18,14 @@ module.exports = function ({ homepageRouter, venuesRouter, restAPIRouter,loginRo
 
 			  
 			  const oneHour = 1000 * 60 * 60;
-			
+			  
+			  //app.use(expressSession({
+			//	secret: "hugoOTim",
+			//	saveUninitialized: false,
+			//	resave: false,
+			//	cookie: { maxAge: oneHour },
+			//	store: store
+			 // }));
 
 			app.engine('hbs', expressHandlebars.engine({
 				extname: 'hbs',

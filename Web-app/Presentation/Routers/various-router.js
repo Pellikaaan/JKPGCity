@@ -5,7 +5,6 @@ module.exports = function ({ }) {
 	const router = express.Router()
 
 	router.get("/", function (request, response) {
-		console.log("är du här")
 		response.render("homepage.hbs")
 	})
 
