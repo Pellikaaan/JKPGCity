@@ -1,0 +1,18 @@
+{{#if loginErrors}}
+    <p>Could not login because:</p>
+    <ul>
+        {{#each loginErrors}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+{{/if}}
+ 
+<form action="/login" method="post">
+    <div> 
+        <input type="text" placeholder="Username" name="username" required>
+    </div>
+    <div>
+        <input type="password" placeholder="Password" name="password" required>
+    </div>
+    <button>LOGIN</button>
+</form>

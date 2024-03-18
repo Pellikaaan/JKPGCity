@@ -1,6 +1,7 @@
 // Import Mongoose
 const mongoose = require('mongoose');
 
+
 // MongoDB Connection String
 const dbConnectionUri = 'mongodb+srv://jkpgcitydb:jkpgcitydb4321@cluster0.1xjsgtk.mongodb.net/jkpgcity';
 mongoose.connect(dbConnectionUri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -17,8 +18,17 @@ const venueSchema = new mongoose.Schema({
   // Add more fields as necessary
 });
 
+const accountSchema = new mongoose.Schema({
+  // Define your schema according to the structure of your documents in the "venues" collection
+  username: String,
+  password: String,
+  isAdmin: Boolean
+  // Add more fields as necessary
+});
+
 // Create a model from the schema
 const Venue = mongoose.model('Venue', venueSchema);
+const Account = mongoose.model('Account', accountSchema)
 
 async function fetchAllVenues(filterOptions = {}, sortOptions = {}) {
   try {
@@ -95,13 +105,43 @@ async function getVenueByID(_id){
   }
 }
 
+async function createAccount(document){
+  try{
+    const venue = await Account.create({ username: document.username, password: document.password, isAdmin: document.isAdmin})
+    return venue;
+  } catch(error){
+    console.error('error',error)
+    throw error
+  }
+}
 
+async function signInToAccount(document){
+  try{
+    const venue = await Account.create({ name: document.name, url: document.url, district: document.district, rating: document.rating })
+    return venue;
+  } catch(error){
+    console.error('error',error)
+    throw error
+  }
+}
 
+async function getAccountByID(_id){
+  try{
+    const venue = await Account.findById(_id)
+    return venue;
+  } catch(error){
+    console.error('error',error)
+    throw error
+  }
+}
 module.exports = {
   fetchAllVenues,
   fetchDistinctDistricts,
   createVenue,
   deleteVenue,
   updateVenue,
-  getVenueByID
+  getVenueByID,
+  createAccount,
+  signInToAccount,
+  getAccountByID
 };

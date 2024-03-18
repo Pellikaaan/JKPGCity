@@ -11,7 +11,7 @@ mongoose.connect(AtlasConnection)
 const Venues = mongoose.model('Venues', { name: String, url: String, district: String, rating: Number });
 const Accounts = mongoose.model('Accounts', { username: String, password: String, isAdmin: Boolean })
 
-
+Accounts.insertOne
 //spara och decoda 
 const jsonData = JSON.parse(fs.readFileSync('/Users/pelli/Documents/GitHub/JKPGCity/stores.json', 'utf8'));
 
